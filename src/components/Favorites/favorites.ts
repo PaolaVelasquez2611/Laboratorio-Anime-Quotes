@@ -1,3 +1,5 @@
+import { addFavorite } from "../../store/actions";
+import { dispatch } from "../../store/index";
 import styles from "./favorites.css"
 
 
@@ -57,15 +59,21 @@ render(){
         <h3 id="quote">${this.quote}</h3>
         <p id="character"> by ${this.character}</p>
         <p id="title">${this.anime}</p>
-        <p> ${this.favorite}</p>
-        <button id="${this.quote}">Add Favorite</button>
+        <button>Add Favorite</button>
         </section>
         
         `
         const button = this.shadowRoot?.querySelector("button");
         button?.addEventListener("click",()=>{
-            this.favorite="Favorite"
-            this.render()
+            dispatch( addFavorite
+                ({ 
+                    payload:{
+                        quote: String(this.quote),
+                        character: String(this.character),
+                        anime: String(this.anime),
+                    }
+                })
+            )
         })
             
 

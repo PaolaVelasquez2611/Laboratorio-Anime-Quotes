@@ -1,0 +1,54 @@
+#title {
+    
+    font-family: Arial, Helvetica, sans-serif; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+}
+
+#character {
+    font-family: Arial, Helvetica, sans-serif; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+}
+
+.section {
+    background-color: rgb(176, 228, 243);
+    border-radius: 30px ;
+    padding: 20px;
+    margin: 7px;
+    background-image: url(https://free4kwallpapers.com/uploads/originals/2022/03/28/anime-landscape-for-desktop-scenery-clouds-stars-buildings-wallpaper.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+
+}
+
+#quote {
+    font-family: Arial, Helvetica, sans-serif; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+    margin: 2px;
+    margin-top: 20px;
+}
+
+button {
+    background-color: rgb(250, 89, 151);
+    border: none;
+    border-radius: 20px;
+    height: 30px;
+    flex-direction: row;
+    margin-left: 93%;
+    margin-bottom: 2px;
+  
+    
+}
+

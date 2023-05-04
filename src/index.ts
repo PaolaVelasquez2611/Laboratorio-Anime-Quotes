@@ -2,6 +2,7 @@ import { getApi } from "./components/data";
 import "./components/export"
 import { Animes } from "./components/export";
 import  { Attributes } from "./components/Favorites/favorites";
+import { app, dispatch } from "./store/index";
 
 class AppContainer extends HTMLElement {
     animequote: Animes[] = []
@@ -9,52 +10,63 @@ class AppContainer extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" })
+        
     }
 
     async connectedCallback() {
         const data = await getApi();
-        data?.forEach((anime: any) => {
-            const quotesAnime = this.ownerDocument.createElement('anime-categorias') as Animes;
-            quotesAnime.setAttribute(Attributes.anime, anime.anime);
-            quotesAnime.setAttribute(Attributes.character, anime.character);
-            quotesAnime.setAttribute(Attributes.quote, anime.quote);
-            quotesAnime.setAttribute(Attributes.favorite, "normal");
-            this.animequote.push(quotesAnime)
         
 
-        })
-        this.render()
+        if (app.favorites.length === 0) {
+            const action:any = await getApi();
+            dispatch(action);
+        }
+        else {
+            this.render(data);
+        }
     }
 
     addTofav(){
         console.log("wuwu")
     }
 
-    render() {
+    render(data:any) {
 
-        const array:any = []
-
-        console.log("pasa super render")
-        if (this.shadowRoot) {
-            this.shadowRoot.innerHTML += `
-            <h1 id="title"> Quotes </h1>
+            data.forEach((anime: any) => {
+            const quotesAnime = this.ownerDocument.createElement('anime-categorias') as Animes;
+            quotesAnime.setAttribute(Attributes.anime, anime.anime);
+            quotesAnime.setAttribute(Attributes.character, anime.character);
+            quotesAnime.setAttribute(Attributes.quote, anime.quote);
+            quotesAnime.setAttribute(Attributes.favorite, "normal");
+            this.animequote.push(quotesAnime)})
+        
+        if (this.shadowRoot) 
+            this.shadowRoot.innerHTML = `
+            <link rel="stylesheet" href="../src/index.css">
+            <h1 id="title">  -- Random Anime Quotes -- </h1>
+            <p id="title"> Choose the ones you like </p>
             `
             this.animequote.forEach((animequote) => {   
                     this.shadowRoot?.appendChild(animequote);  
             })
 
-            this.shadowRoot.innerHTML += `
-            <section class="favorites">
-            <h1 id="title">Favorite Quotes </h1>
-            ${array}
-            </section>
-            `
+            const section = this.ownerDocument.createElement("section")
+            const Title2 = this.ownerDocument.createElement("h1")
+            Title2.innerText = "-- Your Favorites --"
+            Title2.id = "title"
+            section.appendChild(Title2);
+
+            app.favorites.forEach((card, i)=>{
+                const favquotesAnime = this.ownerDocument.createElement('anime-categorias') as Animes;
+            favquotesAnime.setAttribute(Attributes.anime, card.anime);
+            favquotesAnime.setAttribute(Attributes.character, card.character);
+            favquotesAnime.setAttribute(Attributes.quote, card.quote);
+            section.appendChild(favquotesAnime)
+            })
+            this.shadowRoot?.appendChild(section)
             
             
-                
             
-            
-           
             
         
         }
@@ -62,6 +74,6 @@ class AppContainer extends HTMLElement {
 
 
     }
-}
+
 
 customElements.define('app-container', AppContainer)

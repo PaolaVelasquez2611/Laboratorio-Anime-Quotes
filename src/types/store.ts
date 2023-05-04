@@ -20,4 +20,9 @@ export interface AddQuoteActions {
     payload: Card
 }
 
-export type Actions = AddQuoteActions
+export interface GetQuoteActions {
+    action: QuoteActions.GET,
+    payload: Card[];
+}
+
+export type Actions = AddQuoteActions | GetQuoteActions

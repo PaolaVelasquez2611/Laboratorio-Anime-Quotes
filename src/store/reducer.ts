@@ -14,6 +14,13 @@ export const reducer = (currentAction:Actions, currentState:Appstate): Appstate 
                 ]
             }
 
+            case QuoteActions.GET:
+            return {
+                ...currentState,
+                favorites: payload
+        
+            }
+
             default:
                 return currentState;
 
